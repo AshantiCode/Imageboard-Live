@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates');
+@import url("https://fonts.googleapis.com/css?family=Montserrat+Alternates");
 
 body {
-  font-family: 'Montserrat Alternates', sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   background: #fff;
   padding: 0 2rem;
   box-sizing: border-box;
@@ -121,6 +121,8 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* IMAGE MODAL ============================================================== */
 .modal {
   position: fixed;
   top: 0;
@@ -144,31 +146,71 @@ h1 {
 }
 
 .modal-image-container {
+  position: relative;
   width: 60%;
 }
+
+#trash {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+#confirm {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#yes {
+  cursor: pointer;
+}
+
+#yes:hover {
+  color: red;
+}
+
+#no {
+  cursor: pointer;
+}
+
+#no:hover {
+  color: green;
+}
+
 .modal-image {
   max-width: 100%;
   max-height: 400px;
 }
+
 .modal-img-info {
   padding-left: 16px;
   text-align: right;
 }
+
 .image-credits {
+  margin-bottom: 50px;
   font-size: 0.7rem;
   text-align: right;
   color: #42b883;
 }
+
 .modal-comment-container {
   margin-top: 1rem;
   padding: 0.2rem 1rem;
   color: inherit;
   width: 40%;
 }
+
 .modal-title {
   font-size: 1.25rem;
   font-weight: bold;
 }
+
 .comment-form {
   margin-bottom: 1rem;
 }
@@ -190,6 +232,7 @@ h1 {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
 .close-btn {
   font-size: 150%;
   border: none;
@@ -199,6 +242,7 @@ h1 {
   padding-top: 1rem;
   padding-right: 2rem;
 }
+
 .username {
   margin-top: 10px;
   margin-bottom: 0;

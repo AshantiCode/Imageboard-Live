@@ -14,8 +14,14 @@
     <div class="wrapper">
         <div id="main">
 
-            <image-modal v-if="imageId" v-bind:id="imageId" @close-from-modal='closeModal'></image-modal>
-            
+            <image-modal
+                v-if="imageId"
+                v-bind:id="imageId"
+                :data="imageId"
+                @close-from-modal='closeModal'
+                v-on:deletedimage="updateImage">
+            </image-modal>
+
             <h1 class="title" id='title'>whate<span>v</span>er images</h1>
 
             <form autocomplete="off">
@@ -33,11 +39,11 @@
             </form>
 
 
-               
+
             <div class="flex-container" v-if="images.length > 0">
-            
+
                 <div class="card" @click='getId(image.id)' v-for="image in images"  >
-                    <div class="card-img" >  
+                    <div class="card-img" >
                         <img class='image' v-bind:src ='image.url'>
                     </div>
 
@@ -49,8 +55,8 @@
         </div> <!--closes  id main vue app-->
 
 
-    
-    
+
+
     <script id="image-modal" type="text/x-template">
 
         <div class="modal" @click.self="sendCloseToParent">
@@ -65,8 +71,12 @@
                         <p> {{ image.description }}</p>
                         <p class='image-credits'> Photo by: {{ image.username }} </p>
                     </div>
-                    
+                    <svg id="trash" @click="deleteImageConfirm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" enable-background="new 0 0 100 100" xml:space="preserve"><path d="M59.835,72.094V34.495c0-1.657-1.343-3-3-3s-3,1.343-3,3v37.599c0,1.658,1.343,3,3,3S59.835,73.752,59.835,72.094z   M46.164,72.094V34.495c0-1.657-1.343-3-3-3s-3,1.343-3,3v37.599c0,1.658,1.343,3,3,3S46.164,73.752,46.164,72.094z M73.27,31.495  c-1.657,0-3,1.343-3,3v45.412c0,1.217-0.989,2.209-2.205,2.209H31.938c-1.218,0-2.209-0.992-2.209-2.209V34.495c0-1.657-1.343-3-3-3  s-3,1.343-3,3v45.412c0,4.525,3.683,8.209,8.209,8.209h36.126c4.524,0,8.205-3.684,8.205-8.209V34.495  C76.27,32.837,74.927,31.495,73.27,31.495z M79.93,22.148H66.348v-7.263c0-1.657-1.343-3-3-3H36.652c-1.657,0-3,1.343-3,3v7.263  H20.07c-1.657,0-3,1.343-3,3s1.343,3,3,3H79.93c1.657,0,3-1.343,3-3S81.587,22.148,79.93,22.148z M60.348,22.148H39.652v-4.263  h20.695V22.148z"/></svg>
+                    <div id="confirm">
+                        Delete?    <span id="yes" @click="deleteImage">Yes</span> / <span id="no" @click="goBack">No</span>
+                    </div>
                 </div>
+
 
                 <div class="modal-comment-container">
                     <form class='comment-form'>
@@ -74,7 +84,7 @@
                         <input v-model='comment.username' class='comment-input' type="text" placeholder='Your username'>
                         <button class='comment-button' @click='postComment'>Add!</button>
                     </form>
-                
+
                     <!-- <ul v-for='comment in comments'>
                         <li>
                             <p> {{ comment.username }} : {{comment.comment}} </p>
