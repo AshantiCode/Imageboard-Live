@@ -14,11 +14,19 @@ if (process.env.NODE_ENV == "production") {
 } else {
   secrets = require("./secrets"); // secrets.json is in .gitignore
 }
+
+// hab ich eingefügt
 const client = knox.createClient({
-  key: secrets.AWS_KEY,
-  secret: secrets.AWS_SECRET,
+  key: process.env.S3_KEY,
+  secret: process.env.S3_SECRET,
   bucket: "spicedling"
 });
+
+// const client = knox.createClient({
+//   key: secrets.AWS_KEY,
+//   secret: secrets.AWS_SECRET,
+//   bucket: "spicedling"
+// });
 
 module.exports.upload = (req, res, next) => {
   if (!req.file) {
