@@ -1,7 +1,19 @@
-const spicedPg = require("spiced-pg");
-const { dbUser, dbPass } = require("./secrets");
+// const spicedPg = require("spiced-pg");
+// const { dbUser, dbPass } = require("./secrets");
+//
+// db = spicedPg(`postgres:${dbUser}:${dbPass}@localhost:5432/imageboard`);
 
-db = spicedPg(`postgres:${dbUser}:${dbPass}@localhost:5432/imageboard`);
+let spicedPg = require("spiced-pg");
+
+let db;
+
+if (process.env.DATABASE_URL) {
+  db = spicedPg(process.env.DATABASE_URL);
+} else {
+  // if we are on 8080
+  const { dbUser, dbPass } = require("./secrets");
+  db = db = spicedPg(`postgres:${dbUser}:${dbPass}@localhost:5432/imageboard`);
+}
 
 // GET IMAGES
 module.exports.getImages = () => {
