@@ -95,4 +95,6 @@ app.post("/delete", (req, res) => {
     });
 });
 
-app.listen(8080, () => ca.rainbow("Yo, I am listening on 8080"));
+app.listen(process.env.Port || 8080, () =>
+  console.log("Yo, I am listening on 8080")
+);
