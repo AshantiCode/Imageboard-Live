@@ -10,7 +10,7 @@
   "engines": {
     "node": "8.11.1"
   },
-  "author": "",
+  "author": "Ashanti Haring",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
