@@ -13,6 +13,7 @@
   "author": "Ashanti Haring",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.509.0",
     "body-parser": "^1.15.2",
     "chalk-animation": "^1.6.0",
     "express": "^4.14.0",

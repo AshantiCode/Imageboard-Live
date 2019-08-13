@@ -4,3 +4,4 @@ secrets.json
 notes
 NotesForReact
 .vscode
+.env
