@@ -24,17 +24,26 @@
 
             <h1 class="title" id='title'>whate<span>v</span>er images</h1>
 
-            <form autocomplete="off">
+            <form autocomplete="off" class="form">
+                <div class="flex-item">
                 <input type='file' accept='image/*' id='file'>
+            </div>
 
+                <div class="flex-item">
                 <label for="title">Title</label>
                 <input v-model='form.title' type='text' name='title' id='title' value = ''>
+                </div>
 
+                <div class="flex-item">
                 <label for="username">Username</label>
                 <input v-model='form.username' type='text' name='username' id='username'>
+               </div>
 
+               <div class="flex-item">
                 <label for="description">Description</label>
                 <input v-model='form.description' type='text' name='description' id='description'>
+                </div>
+
                 <button class='button' @click.prevent='uploadFile'>upload!</button>
             </form>
 
