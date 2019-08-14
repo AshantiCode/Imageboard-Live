@@ -97,11 +97,11 @@ app.post("/delete", (req, res) => {
     });
 });
 
-;
 
 
 
 app.listen(process.env.PORT || 8080, () =>
-  console.log("THE ENVIRONMENT VARS ARE: ", process.env) console.log("Yo, I am listening on 8080")
+  console.log("THE ENVIRONMENT VARS ARE: ", process.env),
+  console.log("Yo, I am listening on 8080")
 
 );
