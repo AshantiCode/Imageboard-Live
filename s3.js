@@ -7,8 +7,8 @@ let secrets;
 //  new
 if (process.env.NODE_ENV == "production") {
   secrets = {
-    AWS_ACCESS_KEYS: process.env.AWS_ACCESS_KEYS,
-    S3_KEY: process.env.S3_KEY
+    AWS_KEY: process.env.S3_KEY,
+    AWS_SECRET: process.env.S3_SECRET
   }
 } else {
   secrets = require("./secrets");
