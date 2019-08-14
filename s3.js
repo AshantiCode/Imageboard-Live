@@ -19,7 +19,7 @@ if (process.env.NODE_ENV == "production") {
 const client = knox.createClient({
   key: s3.S3_KEY,
   secret: s3.S3_SECRET,
-  bucket: process.env.S3_BUCKET
+  bucket: process.env.S3_BUCKET_NAME
 });
 
 // const client = knox.createClient({
