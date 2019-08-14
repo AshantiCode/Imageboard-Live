@@ -5,14 +5,14 @@ const aws = require("aws-sdk");
 let secrets;
 
 //  new
-if (process.env.NODE_ENV == "production") {
-  secrets = {
-    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
-  }
-} else {
-  secrets = require("./secrets");
-};
+// if (process.env.NODE_ENV == "production") {
+//   secrets = {
+//     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+//     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
+//   }
+// } else {
+//   secrets = require("./secrets");
+// };
 
 // =========================================
 
@@ -21,11 +21,11 @@ if (process.env.NODE_ENV == "production") {
 //   secretAccessKey: process.env.S3_SECRET,
 // });
 
-// if (process.env.NODE_ENV == "production") {
-//   secrets = process.env; // in prod the secrets are environment variables
-// } else {
-//   secrets = require("./secrets"); // secrets.json is in .gitignore
-// }
+if (process.env.NODE_ENV == "production") {
+  secrets = process.env; // in prod the secrets are environment variables
+} else {
+  secrets = require("./secrets"); // secrets.json is in .gitignore
+}
 
 // ===============================================
 
