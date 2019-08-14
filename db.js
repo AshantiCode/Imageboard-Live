@@ -11,8 +11,11 @@ if (process.env.DATABASE_URL) {
   db = spicedPg(process.env.DATABASE_URL);
 } else {
   // if we are on 8080
-  const { dbUser, dbPass } = require("./secrets");
-  db = db = spicedPg(`postgres:${dbUser}:${dbPass}@localhost:5432/imageboard`);
+  const {
+    dbUser,
+    dbPass
+  } = require("./secrets");
+  db = spicedPg(`postgres:${dbUser}:${dbPass}@localhost:5432/imageboard`);
 }
 
 // GET IMAGES
