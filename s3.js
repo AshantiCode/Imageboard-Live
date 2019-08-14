@@ -4,10 +4,10 @@ const aws = require("aws-sdk");
 
 let secrets;
 
-let s3 = new aws.S3({
-  accessKeyId: process.env.S3_KEY,
-  secretAccessKey: process.env.S3_SECRET,
-});
+// let s3 = new aws.S3({
+//   accessKeyId: process.env.S3_KEY,
+//   secretAccessKey: process.env.S3_SECRET,
+// });
 
 if (process.env.NODE_ENV == "production") {
   secrets = process.env; // in prod the secrets are environment variables
@@ -17,9 +17,9 @@ if (process.env.NODE_ENV == "production") {
 
 // hab ich eingefügt (muss bucket auch aendern??)
 const client = knox.createClient({
-  key: s3.S3_KEY,
-  secret: s3.S3_SECRET,
-  bucket: process.env.S3_BUCKET_NAME
+  key: secrets.S3_KEY,
+  secret: secrets.S3_SECRET,
+  bucket: secrets.S3_BUCKET_NAME
 });
 
 // const client = knox.createClient({
