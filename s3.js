@@ -47,7 +47,7 @@ module.exports.upload = (req, res, next) => {
       next();
       fs.unlink(req.file.path, () => {});
     } else {
-      console.log(s3Response.statusCode);
+      console.log("Error inS3Request:", s3Response.statusCode);
       res.sendStatus(500);
     }
   });
