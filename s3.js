@@ -6,7 +6,7 @@ let secrets;
 
 let s3 = new aws.S3({
   accessKeyId: process.env.S3_KEY,
-  secretAccessKey: process.env.S3_SECRET
+  secretAccessKey: process.env.S3_SECRET,
 });
 
 if (process.env.NODE_ENV == "production") {
@@ -15,11 +15,11 @@ if (process.env.NODE_ENV == "production") {
   secrets = require("./secrets"); // secrets.json is in .gitignore
 }
 
-// hab ich eingefügt
+// hab ich eingefügt (muss bucket auch aendern??)
 const client = knox.createClient({
-  key: process.env.S3_KEY,
-  secret: process.env.S3_SECRET,
-  bucket: "spicedling"
+  key: s3.S3_KEY,
+  secret: s3.S3_SECRET,
+  bucket: process.env.S3_BUCKET
 });
 
 // const client = knox.createClient({

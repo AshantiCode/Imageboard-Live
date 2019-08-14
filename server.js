@@ -11,11 +11,11 @@ const config = require("./config");
 const app = express();
 
 const diskStorage = multer.diskStorage({
-  destination: function(req, file, callback) {
+  destination: function (req, file, callback) {
     callback(null, __dirname + "/uploads");
   },
-  filename: function(req, file, callback) {
-    uidSafe(24).then(function(uid) {
+  filename: function (req, file, callback) {
+    uidSafe(24).then(function (uid) {
       callback(null, uid + path.extname(file.originalname));
     });
   }
@@ -53,12 +53,14 @@ app.get("/image/:id", (req, res) => {
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
   db.addImage(
-    config.s3Url + req.file.filename,
-    req.body.username,
-    req.body.title,
-    req.body.description
-  )
-    .then(({ rows }) => {
+      config.s3Url + req.file.filename,
+      req.body.username,
+      req.body.title,
+      req.body.description
+    )
+    .then(({
+      rows
+    }) => {
       res.json(rows[0]);
     })
     .catch(err => {
@@ -95,6 +97,6 @@ app.post("/delete", (req, res) => {
     });
 });
 
-app.listen(process.env.Port || 8080, () =>
+app.listen(process.env.PORT || 8080, () =>
   console.log("Yo, I am listening on 8080")
 );
