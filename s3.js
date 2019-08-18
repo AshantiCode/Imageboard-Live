@@ -32,8 +32,8 @@ if (process.env.NODE_ENV == "production") {
 
 // hab ich eingefügt (muss bucket auch aendern??)
 const client = knox.createClient({
-  key: secrets.S3_KEY,
-  secret: secrets.S3_SECRET,
+  AWS_ACCESS_KEY_ID: secrets.AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY: secrets.AWS_SECRET_ACCESS_KEY,
   bucket: secrets.S3_BUCKET_NAME
 });
 
