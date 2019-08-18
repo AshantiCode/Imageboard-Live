@@ -4,22 +4,6 @@ const aws = require("aws-sdk");
 
 let secrets;
 
-//  new
-// if (process.env.NODE_ENV == "production") {
-//   secrets = {
-//     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-//     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
-//   }
-// } else {
-//   secrets = require("./secrets");
-// };
-
-// =========================================
-
-// let s3 = new aws.S3({
-//   accessKeyId: process.env.S3_KEY,
-//   secretAccessKey: process.env.S3_SECRET,
-// });
 
 if (process.env.NODE_ENV == "production") {
   secrets = process.env; // in prod the secrets are environment variables
@@ -30,18 +14,14 @@ if (process.env.NODE_ENV == "production") {
 // ===============================================
 
 
-// hab ich eingefügt (muss bucket auch aendern??)
+// hab ich eingefügt für going live
 const client = knox.createClient({
   key: secrets.AWS_ACCESS_KEY_ID,
   secret: secrets.AWS_SECRET_ACCESS_KEY,
   bucket: secrets.S3_BUCKET_NAME
 });
 
-// const client = knox.createClient({
-//   key: secrets.AWS_KEY,
-//   secret: secrets.AWS_SECRET,
-//   bucket: "spicedling"
-// });
+
 
 module.exports.upload = (req, res, next) => {
   if (!req.file) {

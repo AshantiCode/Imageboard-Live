@@ -1,4 +1,4 @@
-(function() {
+(function () {
   new Vue({
     el: "#main",
     data: {
@@ -11,35 +11,34 @@
         file: null
       }
     },
-    mounted: function() {
-      var self = this;
-      console.log("I mounted!");
+    mounted: function () {
+      var self = this;;
 
-      axios.get("/images").then(function(res) {
-        console.log("res.data:", res.data);
+      axios.get("/images").then(function (res) {
+
         self.images = res.data;
       });
     },
     methods: {
-      getId: function(imageId) {
+      getId: function (imageId) {
         console.log("getting ID!!!!!: ", imageId);
         this.imageId = imageId;
       },
-      closeModal: function() {
+      closeModal: function () {
         console.log("received close from child and closed Modal!!!!");
         this.imageId = null;
       },
 
-      updateImage: function(data) {
+      updateImage: function (data) {
         let self = this;
         console.log("Data in Updateimage:", data);
-        var index = self.images.findIndex(function(result) {
+        var index = self.images.findIndex(function (result) {
           return result.id === data.id;
         });
         this.images.splice(index, 1);
       },
 
-      uploadFile: function(e) {
+      uploadFile: function (e) {
         var file = document.getElementById("file");
         var uploadedFile = file.files[0];
         //now we want to prepate the files by using API Form Data to then send them to the server with axious.
@@ -55,7 +54,7 @@
 
         axios
           .post("/upload", formData)
-          .then(function(respond) {
+          .then(function (respond) {
             self.images.unshift(respond.data);
           })
           .catch(err => {
@@ -75,7 +74,7 @@
 
   Vue.component("image-modal", {
     template: "#image-modal",
-    data: function() {
+    data: function () {
       return {
         image: {
           title: "",
@@ -92,14 +91,14 @@
       };
     },
     props: ["id"],
-    mounted: function() {
+    mounted: function () {
       console.log("Image modal has mounted");
 
       var self = this;
       axios
         .get("/image/" + self.id)
 
-        .then(function(respond) {
+        .then(function (respond) {
           console.log("res from axios modal:", respond);
           self.image.url = respond.data[0].url;
           self.image.id = respond.data[0].id;
@@ -107,11 +106,11 @@
           self.image.title = respond.data[0].title;
           self.image.description = respond.data[0].description;
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
         });
 
-      axios.get("/comments/" + self.id).then(function(respond) {
+      axios.get("/comments/" + self.id).then(function (respond) {
         console.log("get comments: ", respond);
         if (respond.data.length > 0) {
           for (let i = 0; i < respond.data.length; i++) {
@@ -122,7 +121,7 @@
     },
 
     methods: {
-      postComment: function(e) {
+      postComment: function (e) {
         e.preventDefault();
         let self = this;
         console.log("this is postComment: ", this);
@@ -132,31 +131,31 @@
             username: self.comment.username,
             id: self.id
           })
-          .then(function(respond) {
+          .then(function (respond) {
             self.comments.unshift(respond.data[0]);
             self.comment.comment = "";
             self.comment.username = "";
           }); // results are from res.json(results) from db.postComment and go into then
       },
 
-      sendCloseToParent: function() {
+      sendCloseToParent: function () {
         console.log("Send close to parent!!!!");
         console.log("this in sendcloseto parten: ", this);
         //events from $emit always in lowercase (in kebap-case),no CamelCase!
         this.$emit("close-from-modal");
       },
 
-      deleteImageConfirm: function() {
+      deleteImageConfirm: function () {
         document.getElementById("trash").style.display = "none";
         document.getElementById("confirm").style.display = "block";
       },
 
-      goBack: function() {
+      goBack: function () {
         document.getElementById("trash").style.display = "block";
         document.getElementById("confirm").style.display = "none";
       },
 
-      deleteImage: function() {
+      deleteImage: function () {
         let self = this;
         axios.post("/delete", {
           id: self.id
