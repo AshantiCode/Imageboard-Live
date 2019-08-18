@@ -21,17 +21,15 @@
     },
     methods: {
       getId: function (imageId) {
-        console.log("getting ID!!!!!: ", imageId);
         this.imageId = imageId;
       },
       closeModal: function () {
-        console.log("received close from child and closed Modal!!!!");
         this.imageId = null;
       },
 
       updateImage: function (data) {
         let self = this;
-        console.log("Data in Updateimage:", data);
+
         var index = self.images.findIndex(function (result) {
           return result.id === data.id;
         });
@@ -92,14 +90,14 @@
     },
     props: ["id"],
     mounted: function () {
-      console.log("Image modal has mounted");
+
 
       var self = this;
       axios
         .get("/image/" + self.id)
 
         .then(function (respond) {
-          console.log("res from axios modal:", respond);
+
           self.image.url = respond.data[0].url;
           self.image.id = respond.data[0].id;
           self.image.username = respond.data[0].username;
@@ -111,7 +109,7 @@
         });
 
       axios.get("/comments/" + self.id).then(function (respond) {
-        console.log("get comments: ", respond);
+
         if (respond.data.length > 0) {
           for (let i = 0; i < respond.data.length; i++) {
             self.comments.unshift(respond.data[i]);
@@ -124,7 +122,7 @@
       postComment: function (e) {
         e.preventDefault();
         let self = this;
-        console.log("this is postComment: ", this);
+
         axios
           .post("/comments/:id", {
             comment: self.comment.comment,
@@ -139,8 +137,7 @@
       },
 
       sendCloseToParent: function () {
-        console.log("Send close to parent!!!!");
-        console.log("this in sendcloseto parten: ", this);
+
         //events from $emit always in lowercase (in kebap-case),no CamelCase!
         this.$emit("close-from-modal");
       },
