@@ -4,7 +4,6 @@ const aws = require("aws-sdk");
 
 let secrets;
 
-
 if (process.env.NODE_ENV == "production") {
   secrets = process.env; // in prod the secrets are environment variables
 } else {
@@ -13,15 +12,11 @@ if (process.env.NODE_ENV == "production") {
 
 // ===============================================
 
-
-// hab ich eingefügt für going live
 const client = knox.createClient({
   key: secrets.AWS_ACCESS_KEY_ID,
   secret: secrets.AWS_SECRET_ACCESS_KEY,
   bucket: secrets.S3_BUCKET_NAME
 });
-
-
 
 module.exports.upload = (req, res, next) => {
   if (!req.file) {
