@@ -1,6 +1,6 @@
 const knox = require("knox");
 const fs = require("fs");
-const aws = require("aws-sdk");
+// const aws = require("aws-sdk");
 
 let secrets;
 
@@ -11,7 +11,7 @@ if (process.env.NODE_ENV == "production") {
 }
 
 // ===============================================
-
+//
 const client = knox.createClient({
   key: secrets.AWS_ACCESS_KEY_ID,
   secret: secrets.AWS_SECRET_ACCESS_KEY,
