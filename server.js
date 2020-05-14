@@ -56,11 +56,15 @@ app.get('/image/:id', (req, res) => {
 });
 
 app.post('/upload', uploader.single('file'), (req, res) => {
-	console.log('i am working', req.file.buffer);
+	// console.log('i am working', req.file.buffer);
 	console.log('Req.File:', req.file);
 	console.log('Req.Body:', req.body);
 
-	if (req.file) {
+	if (req.file == undefined) {
+		// throw new Error('image missing');
+		res.status(400).send({ error: 'image is missing' });
+		return;
+	} else {
 		db.addImage(req.file.filename, req.body.username, req.body.title, req.body.description)
 			.then(({ rows }) => {
 				console.log('REs?', { rows });
@@ -68,9 +72,8 @@ app.post('/upload', uploader.single('file'), (req, res) => {
 			})
 			.catch((err) => {
 				console.log('err in post upload:', err);
+				return next(err);
 			});
-	} else {
-		return res.send(`add image`);
 	}
 });
 

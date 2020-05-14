@@ -2,6 +2,9 @@
 	new Vue({
 		el: '#main',
 		data: {
+			errorDialog: null,
+			errorText: '',
+			maxSize: 1024,
 			imageId: '',
 			images: [],
 			form: {
@@ -11,6 +14,12 @@
 				file: null,
 			},
 		},
+
+		props: {
+			// Use "value" to enable using v-model
+			value: Object,
+		},
+
 		mounted: function () {
 			var self = this;
 
@@ -36,35 +45,57 @@
 				this.images.splice(index, 1);
 			},
 
+			toggleErrMsg: function (e) {
+				let chooseFile = document.getElementById('file');
+				const errMsg = document.querySelector('.subheading');
+
+				document.querySelector('.subheading').style.display = 'none';
+
+				// chooseFile.addEventListener('click', function () {
+				// 	console.log('I was clicked');
+				// 	if (errorDialog) {
+				// 		errMsg.classList.add('hide');
+				// 	}
+				// });
+			},
+
 			uploadFile: function (e) {
 				var file = document.getElementById('file');
 				var uploadedFile = file.files[0];
 
-				//now we want to prepate the files by using API Form Data to then send them to the server with axious.
-				var formData = new FormData();
+				// Check
+				if (!uploadedFile) {
+					this.errorDialog = true;
+					this.errorText = 'Please choose an image file';
+				} else {
+					this.toggleErrMsg();
 
-				// attach inputs to formData
-				formData.append('file', uploadedFile);
-				formData.append('title', this.form.title);
-				formData.append('description', this.form.description);
-				formData.append('username', this.form.username);
+					//now we want to prepate the files by using API Form Data to then send them to the server with axious.
+					var formData = new FormData();
 
-				let self = this;
+					// attach inputs to formData
+					formData.append('file', uploadedFile);
+					formData.append('title', this.form.title);
+					formData.append('description', this.form.description);
+					formData.append('username', this.form.username);
 
-				axios
-					.post('/upload', formData)
-					.then(function (respond) {
-						self.images.unshift(respond.data);
-					})
-					.catch((err) => {
-						console.log('Error in uploadFile: ', err);
-					});
+					let self = this;
 
-				//lines below clear the input-fields after upload
-				this.form.title = '';
-				this.form.username = '';
-				this.form.description = '';
-				file.value = '';
+					axios
+						.post('/upload', formData)
+						.then(function (respond) {
+							self.images.unshift(respond.data);
+						})
+						.catch((err) => {
+							console.log('Error in uploadFile: ', err);
+						});
+
+					//lines below clear the input-fields after upload
+					this.form.title = '';
+					this.form.username = '';
+					this.form.description = '';
+					file.value = '';
+				}
 			}, //closes uploadFile;
 		}, //closes methods
 	}); // closes Vue instance

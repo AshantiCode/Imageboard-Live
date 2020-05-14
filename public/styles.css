@@ -83,6 +83,14 @@ h1 {
 	transform: scale(0.99);
 }
 
+.subheading {
+	color: red;
+}
+
+.subheading .hide {
+	display: none;
+}
+
 .flex-container {
 	margin-top: 3.8rem;
 	flex-wrap: wrap;

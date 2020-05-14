@@ -19,7 +19,8 @@
 
 				<form autocomplete="off" class="form">
 					<div class="flex-item">
-						<input type='file' accept='image/*' id='file'>
+						<input type='file' accept='image/*' id='file' @click='toggleErrMsg'>
+
 					</div>
 
 					<div class="flex-item">
@@ -30,15 +31,25 @@
 					<div class="flex-item">
 						<label for="username">Username</label>
 						<input v-model='form.username' type='text' name='username' id='username'>
+
 					</div>
 
 					<div class="flex-item">
 						<label for="description">Description</label>
 						<input v-model='form.description' type='text' name='description' id='description'>
+
 					</div>
+
 
 					<button class='button' @click.prevent='uploadFile'>upload!</button>
 				</form>
+
+				<!--Error Dialog-->
+
+				<p class="subheading">{{errorText}}</p>
+
+
+				<!-- End Error Dialog -->
 
 
 				<div class="flex-container" v-if="images.length > 0">
@@ -122,4 +133,4 @@
 			<script src="/scripts.js"></script>
 		</body>
 	</body>
-</html>
+</html></body></html>
