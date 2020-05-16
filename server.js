@@ -5,6 +5,8 @@ const multer = require('multer');
 const path = require('path');
 const ca = require('chalk-animation');
 const helpers = require('./helpers');
+const firebase = require("firebase/app");
+const fbstorage = require("firebase/storage");
 
 const uidSafe = require('uid-safe');
 
@@ -12,7 +14,7 @@ const app = express();
 
 const diskStorage = multer.diskStorage({
 	destination: function (req, file, callback) {
-		callback(null, __dirname + '/public/uploads/');
+		callback(null, __dirname + '/uploads/');
 	},
 	filename: function (req, file, callback) {
 		uidSafe(24).then(function (uid) {
@@ -21,6 +23,18 @@ const diskStorage = multer.diskStorage({
 		});
 	},
 });
+// =====   Firebase ======
+const firebaseConfig = {
+	apiKey: "AIzaSyAsm4D-3VvEB1hcOdH9_q0Hpqjy9LbpD8A",
+	authDomain: "whatever-images.firebaseapp.com",
+	databaseURL: "https://whatever-images.firebaseio.com",
+	projectId: "whatever-images",
+	storageBucket: "whatever-images.appspot.com",
+	messagingSenderId: "264508170025",
+	appId: "1:264508170025:web:26a7a71857c6cd04ab2138"
+};
+firebase.initializeApp(firebaseConfig);
+// =====   Firebase ======
 
 const uploader = multer({
 	storage: diskStorage,
@@ -39,7 +53,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/images', (req, res) => {
-	console.log('Respond in /inages', res.body);
 	db.getImages()
 		.then((data) => {
 			res.json(data.rows.reverse());
@@ -55,19 +68,23 @@ app.get('/image/:id', (req, res) => {
 	});
 });
 
+// app.post('/upload', (req, res) => {
 app.post('/upload', uploader.single('file'), (req, res) => {
-	// console.log('i am working', req.file.buffer);
-	console.log('Req.File:', req.file);
-	console.log('Req.Body:', req.body);
 
 	if (req.file == undefined) {
-		// throw new Error('image missing');
-		res.status(400).send({ error: 'image is missing' });
+		res.status(400).send({
+			error: 'image is missing'
+		});
 		return;
 	} else {
-		db.addImage(req.file.filename, req.body.username, req.body.title, req.body.description)
-			.then(({ rows }) => {
-				console.log('REs?', { rows });
+		const url = req.body.imageUrl;
+		const username = req.body.username;
+		const title = req.body.title;
+		const description = req.body.description
+		db.addImage(url, username, title, description)
+			.then(({
+				rows
+			}) => {
 				res.json(rows[0]);
 			})
 			.catch((err) => {
@@ -78,10 +95,8 @@ app.post('/upload', uploader.single('file'), (req, res) => {
 });
 
 app.post('/comments/:id', (req, res) => {
-	// console.log('POST req.body Comments: ', req.body);
 	db.addComment(req.body.comment, req.body.username, req.body.id)
 		.then((results) => {
-			console.log('results from post comments: ', results);
 			res.json(results.rows);
 		})
 		.catch((err) => {
@@ -90,9 +105,7 @@ app.post('/comments/:id', (req, res) => {
 });
 
 app.get('/comments/:id', (req, res) => {
-	console.log('GET Comments req params id:', req.params.id);
 	db.getImageComments(req.params.id).then((results) => {
-		console.log('REsults in GET Comments to compare with post: ', results);
 		res.json(results.rows);
 	});
 });
