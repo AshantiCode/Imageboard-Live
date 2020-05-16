@@ -23,18 +23,6 @@ const diskStorage = multer.diskStorage({
 		});
 	},
 });
-// =====   Firebase ======
-const firebaseConfig = {
-	apiKey: "AIzaSyAsm4D-3VvEB1hcOdH9_q0Hpqjy9LbpD8A",
-	authDomain: "whatever-images.firebaseapp.com",
-	databaseURL: "https://whatever-images.firebaseio.com",
-	projectId: "whatever-images",
-	storageBucket: "whatever-images.appspot.com",
-	messagingSenderId: "264508170025",
-	appId: "1:264508170025:web:26a7a71857c6cd04ab2138"
-};
-firebase.initializeApp(firebaseConfig);
-// =====   Firebase ======
 
 const uploader = multer({
 	storage: diskStorage,
@@ -46,7 +34,6 @@ const uploader = multer({
 
 app.use(bodyParser.json());
 app.use(express.static('./public'));
-app.use(express.static('./public/uploads'));
 
 app.get('/', (req, res) => {
 	res.redirect('/images');

@@ -202,6 +202,9 @@ Vue.component('image-modal', {
 				id: self.id,
 			});
 			this.$emit('close-from-modal');
+			if (err) {
+				console.log('Axios Delete: ', err)
+			}
 		},
 	},
 }); //closing component
