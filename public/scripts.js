@@ -3,7 +3,7 @@ new Vue({
   data: {
     errorDialog: null,
     errorText: "",
-    maxSize: 1024,
+    maxSize: 2097152,
     imageId: "",
     images: [],
     form: {
@@ -65,20 +65,31 @@ new Vue({
       const file = document.getElementById("file");
       const uploadedFile = file.files[0];
 
-      // Check
+      // Image Validdation
       if (!uploadedFile) {
         this.errorDialog = true;
         this.errorText = "Please choose an image file";
+      } else if (uploadedFile.size > this.maxSize) {
+        console.log("checked size");
+        this.errorDialog = true;
+        this.errorText = "Your image is too big. Maximal size is 2MB.";
+        alert(
+          "Your image is too big (" +
+            Math.round(uploadedFile.size / 1024 / 1024) +
+            "MB). Maximal upload size 2MB."
+        );
       } else {
         this.toggleErrMsg();
         const name = new Date() + "-" + uploadedFile.name;
 
+        // Connect to filestorage
         async function fireBaseUpload() {
           const storedImage = storageRef.child(name);
           let response = await storedImage.put(uploadedFile);
           let imageUrl = await storedImage.getDownloadURL();
           return imageUrl;
         }
+        // Upload function and send data to backend
         let self = this;
         fireBaseUpload().then(function (imageUrl) {
           var formData = new FormData();
