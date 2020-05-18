@@ -171,6 +171,9 @@ Vue.component("image-modal", {
       e.preventDefault();
       let self = this;
 
+      console.log("this comments: ", self.comments);
+      console.log("this comment: ", self.comment);
+
       axios
         .post("/comments/:id", {
           comment: self.comment.comment,
@@ -208,9 +211,6 @@ Vue.component("image-modal", {
         id: self.id,
       });
       this.$emit("close-from-modal");
-      if (err) {
-        console.log("Axios Delete: ", err);
-      }
     },
   },
 }); //closing component
